@@ -12,6 +12,7 @@
 #include "Manager.h"
 #include "stb_image.h"
 #include "Texture2D.h"
+#include "Camera.h"
 
 
 using namespace std;
@@ -20,37 +21,37 @@ using namespace std;
 
 GLfloat octahedron[] = {
 	//vertices            colors
-	-0.5f, 0.f, 0.f,
-	 0.f, 0.f, 0.5f,
-	 0.f, 0.5f, 0.f,
+	-0.5f, 0.f,  0.f,	1.f, 0.f, 0.f, //1 верх
+	 0.f,  0.f,  0.5f,  1.f, 0.f, 0.f,
+	 0.f,  0.5f, 0.f,   1.f, 0.f, 0.f,
 
-	 0.f, 0.f, 0.5f,
-	 0.5f, 0.f, 0.f,
-	 0.f, 0.5f, 0.f,
+	 0.f,  0.f,  0.5f,	0.f, 1.f, 0.f, //2 верх
+	 0.5f, 0.f,  0.f,	0.f, 1.f, 0.f,
+	 0.f,  0.5f, 0.f,	0.f, 1.f, 0.f,
 
-	-0.5f, 0.f, 0.f,
-	 0.f, -0.5f, 0.f,
-	 0.f, 0.f, 0.5f,
+	-0.5f, 0.f,  0.f,	0.f, 1.f, 1.f, //1 низ
+	 0.f, -0.5f, 0.f,	0.f, 1.f, 1.f,
+	 0.f,  0.f,  0.5f,	0.f, 1.f, 1.f,
 
-	 0.f, 0.f, 0.5f,
-	 0.f, -0.5f, 0.f,
-	 0.5f, 0.f, 0.f,
+	 0.f,  0.f,  0.5f,	1.f, 0.f, 0.f, //2 низ
+	 0.f, -0.5f, 0.f,	1.f, 0.f, 0.f,
+	 0.5f, 0.f,  0.f,	1.f, 0.f, 0.f,
 
-	-0.5f, 0.f, 0.f,
-	 0.f, 0.f, -0.5f,
-	 0.f, 0.5f, 0.f,
+	-0.5f, 0.f,  0.f,	0.f, 0.f, 1.f, //3 верх
+	 0.f,  0.f, -0.5f,	0.f, 0.f, 1.f,
+	 0.f,  0.5f, 0.f,	0.f, 0.f, 1.f,
 
-	 0.f, 0.5f, 0.f,
-	 0.f, 0.f, -0.5f,
-	 0.5f, 0.f, 0.f,
+	 0.f,  0.5f, 0.f,	0.f, 1.f, 1.f, //4 верх
+	 0.f,  0.f, -0.5f,	0.f, 1.f, 1.f,
+	 0.5f, 0.f,  0.f,	0.f, 1.f, 1.f,
 
-	-0.5f, 0.f, 0.f,
-	 0.f, -0.5f, 0.f,
-	 0.f, 0.f, -0.5f,
+	-0.5f, 0.f,  0.f,	0.f, 1.f, 0.f, //3 низ
+	 0.f, -0.5f, 0.f,	0.f, 1.f, 0.f,
+	 0.f,  0.f, -0.5f,	0.f, 1.f, 0.f,
 
-	 0.f, 0.f, -0.5f,
-	 0.f, -0.5f, 0.f,
-	 0.5f, 0.f, 0.f
+	 0.f,  0.f, -0.5f,	0.f, 0.f, 1.f, //4 низ
+	 0.f, -0.5f, 0.f,	0.f, 0.f, 1.f,
+	 0.5f, 0.f,  0.f,	0.f, 0.f, 1.f
 };
 
 GLfloat pyramid[] = {
@@ -86,17 +87,17 @@ GLfloat tetrahedron[] = {
 	 a/sqrt(3), 0.f, -a*sqrt(6)/12,  0.f, 1.f, 0.f,
 	-a/sqrt(12), a/2, -a*sqrt(6)/12,  0.f, 1.f, 0.f,
 
-	 0, 0, a*sqrt(6)/4,  0.f, 0.f, 1.f, //(0)
+	 0, 0, a*sqrt(6)/4,  0.f, 0.f, 1.f, 
 	-a/sqrt(12), -a/2, -a*sqrt(6)/12,  0.f, 0.f, 1.f,
-	 a/sqrt(3), 0, -a*sqrt(6)/12,  0.f, 0.f, 1.f, //(1)
+	 a/sqrt(3), 0, -a*sqrt(6)/12,  0.f, 0.f, 1.f, 
 
-	 0, 0, a*sqrt(6)/4,  0.f, 1.f, 1.f,// (0)
-	-a/sqrt(12), a/2, -a*sqrt(6)/12,  0.f, 1.f, 1.f, //(2)
-	-a/sqrt(12), -a/2, -a*sqrt(6)/12,  0.f, 1.f, 1.f, //(3)
+	 0, 0, a*sqrt(6)/4,  0.f, 1.f, 1.f,
+	-a/sqrt(12), a/2, -a*sqrt(6)/12,  0.f, 1.f, 1.f, 
+	-a/sqrt(12), -a/2, -a*sqrt(6)/12,  0.f, 1.f, 1.f, 
 
-	 a/sqrt(3), 0, -a*sqrt(6)/12,  1.f, 0.f, 1.f,// (1)
-	-a/sqrt(12), -a/2, -a*sqrt(6)/12,  1.f, 0.f, 1.f,// (3)
-	-a/sqrt(12), a/2, -a*sqrt(6)/12,  1.f, 0.f, 1.f //(2)
+	 a/sqrt(3), 0, -a*sqrt(6)/12,  1.f, 0.f, 1.f,
+	-a/sqrt(12), -a/2, -a*sqrt(6)/12,  1.f, 0.f, 1.f,
+	-a/sqrt(12), a/2, -a*sqrt(6)/12,  1.f, 0.f, 1.f 
 };
 /*unsigned int indices1[] = {
 	0, 1, 2, //1
@@ -150,21 +151,58 @@ GLfloat cube[] = {
 	-0.5f,  0.5f, -0.5f,  1.f, 0.f, 1.f
 };
 
+GLfloat cube_t[] = {
+	//vertices					//textures
+		 -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+		  0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+		  0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		  0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		 -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		 -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+		 -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		  0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		  0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		  0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		 -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+		 -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+		 -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		 -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		 -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		 -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		 -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		 -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		  0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		  0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		  0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		  0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		  0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		  0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		 -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		  0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+		  0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		  0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		 -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		 -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+		 -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		  0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		  0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		  0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		 -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+		 -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+};
+
 unsigned int indices[] = {
 	0, 1, 3,
 	1, 2, 3
 };
 
 
-//объявление переменных для работы с выбором фигуры, изменением ее цвета, размера и формы
-float m_rotate = 0;
-float m_left_right = 0;
-float m_up_down = 0;
-float m_sizex = 1;
-float m_sizey = 1;
-float m_size = 1;
-int m_change = 0;
-int m_color;
+
 
 //функция обратного вызова
 //вызывается при каждом изменении размера окна, чтобы скорректировать размер области окна просмотра
@@ -175,81 +213,60 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 }
 
 //функция пользовательского ввода с клавиатуры
-/*void processInput(GLFWwindow* window)
+void processInput(GLFWwindow* window);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+
+// Камера
+Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+float lastX = 800 / 2.0f;
+float lastY = 600 / 2.0f;
+
+bool firstMouse = true;
+
+// Тайминги
+float deltaTime = 0.0f;	// время между текущим кадром и последним кадром
+float lastFrame = 0.0f;
+
+void processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, GL_TRUE);
+		glfwSetWindowShouldClose(window, true);
 
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS && m_left_right >= -1.f)
-		m_left_right -= 0.001f;
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && m_left_right <= 1.f)
-		m_left_right += 0.001f;
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && m_up_down <= 1.f)
-		m_up_down += 0.001f;
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS && m_up_down >= -1.f)
-		m_up_down -= 0.001f;
-	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-		m_rotate += glm::radians(0.1f);
-	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-		m_rotate -= glm::radians(0.1f);
-
-	if (glfwGetKey(window, GLFW_KEY_KP_ADD) == GLFW_PRESS)
-		m_sizex += 0.001f;
-	if (glfwGetKey(window, GLFW_KEY_KP_SUBTRACT) == GLFW_PRESS && m_sizex > 0)
-		m_sizex -= 0.001f;
-	if (glfwGetKey(window, GLFW_KEY_KP_DIVIDE) == GLFW_PRESS)
-		m_sizey += 0.001f;
-	if (glfwGetKey(window, GLFW_KEY_KP_MULTIPLY) == GLFW_PRESS && m_sizey > 0)
-		m_sizey -= 0.001f;
-	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-		m_size += 0.001f;
-	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS && m_size > 0)
-		m_size -= 0.001f;
-}*/
-
-//функция определения координат курсора на экране
-/*static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
-{
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		camera.ProcessKeyboard(FORWARD, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		camera.ProcessKeyboard(BACKWARD, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		camera.ProcessKeyboard(LEFT, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		camera.ProcessKeyboard(RIGHT, deltaTime);
 }
-//объявление переменных, в которые будут записаны х и у координаты положения курсора
-double xpos, ypos;*/
 
-//функция пользовательского ввода с помощью мыши
-/*void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+// glfw: всякий раз, когда перемещается мышь, вызывается данная callback-функция
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-	if (xpos < 80 && xpos > 40 && ypos > 30 && ypos < 60 && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-		m_color = 1;
-	if (xpos < 160 && xpos > 120 && ypos > 30 && ypos < 60 && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-		m_color = 2;
-	if (xpos < 240 && xpos > 200 && ypos > 30 && ypos < 60 && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-		m_color = 3;
-	if (xpos < 320 && xpos > 280 && ypos > 30 && ypos < 60 && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-		m_color = 4;
-	if (xpos < 400 && xpos > 360 && ypos > 30 && ypos < 60 && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-		m_color = 5;
-	if (xpos < 480 && xpos > 440 && ypos > 30 && ypos < 60 && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-		m_color = 6;
-	if (xpos < 560 && xpos > 520 && ypos > 30 && ypos < 60 && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-		m_color = 7;
-	if (xpos < 640 && xpos > 600 && ypos > 30 && ypos < 60 && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-		m_color = 8;
+	if (firstMouse)
+	{
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
 
-	if (xpos < 70 && xpos > 49 && ypos > 95 && ypos < 112 && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-		m_change = 1;
-	if (xpos < 100 && xpos > 20 && ypos > 140 && ypos < 155 && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-		m_change = 2;
-	if (xpos < 88 && xpos > 32 && ypos > 180 && ypos < 225 && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-		m_change = 3;
-	if (xpos < 88 && xpos > 32 && ypos > 237 && ypos < 285 && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-		m_change = 4;
-	if (xpos < 100 && xpos > 20 && ypos > 300 && ypos < 360 && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-		m_change = 5;
-	if (xpos < 100 && xpos > 20 && ypos > 375 && ypos < 440 && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-		m_change = 6;
-	if (xpos < 82 && xpos > 35 && ypos > 458 && ypos < 543 && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
-		m_change = 7;
-}*/
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos; // перевернуто, так как y-координаты идут снизу вверх
 
+	lastX = xpos;
+	lastY = ypos;
+
+	camera.ProcessMouseMovement(xoffset, yoffset);
+}
+
+// glfw: всякий раз, когда прокручивается колесико мыши, вызывается данная callback-функция
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	camera.ProcessMouseScroll(yoffset);
+}
 
 
 /*void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
@@ -259,6 +276,7 @@ double xpos, ypos;*/
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
 }*/
+
 
 
 int main(int argc, char** argv)
@@ -293,6 +311,11 @@ int main(int argc, char** argv)
 	//сообщаем GLFW, что хотим вызывать функцию framebuffer_size_callback
 	//каждый раз при изменении размеров окна
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetScrollCallback(window, scroll_callback);
+
+	// Сообщаем GLFW, чтобы он захватил наш курсор
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	//инициализация GLAD, чтобы потом пользоваться функциями OpenGL
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -380,7 +403,7 @@ int main(int argc, char** argv)
 		cerr << "cant create shader program: " << "texture_an" << endl;
 		return -1;
 	}
-	//auto tex = manager.loadTexture("BackgroundTexture", "resource/background.jpg");
+	auto tex = manager.loadTexture("BackgroundTexture", "image/img.jpg");
 
 	{
 		//объявление вершинного буфера и вершинного массива
@@ -394,13 +417,13 @@ int main(int argc, char** argv)
 		//triangle
 		glBindVertexArray(VAO[0]);
 		glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(octahedron), octahedron, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(cube_t), cube_t, GL_STATIC_DRAW);
 		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[0]);
 		//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices1), indices1, GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
-		//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-		//glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
 
 		//cube
 		/*glBindVertexArray(VAO[1]);
@@ -414,7 +437,6 @@ int main(int argc, char** argv)
 		glEnableVertexAttribArray(1);*/
 
 
-
 		//отменяем привязку вершинного буфера и вершинного массива
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
@@ -423,11 +445,13 @@ int main(int argc, char** argv)
 		//цикл рендеринга
 		while (!glfwWindowShouldClose(window))
 		{
+			// Логическая часть работы со временем для каждого кадра
+			float currentFrame = glfwGetTime();
+			deltaTime = currentFrame - lastFrame;
+			lastFrame = currentFrame;
+
 			//пользовательский ввод
-			//processInput(window);
-			//glfwSetKeyCallback(window, key_callback);
-			//glfwSetMouseButtonCallback(window, mouse_button_callback);
-			//glfwGetCursorPos(window, &xpos, &ypos);
+			processInput(window);
 
 			//выполнение рендеринга
 			//задаем цвет окна
@@ -438,22 +462,34 @@ int main(int argc, char** argv)
 			//glClear() использует текущие настройки цвета
 			//установленные при помощи функции glClearColor()
 
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //karkas regim
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //karkas regim
+			//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 
 			//glm::mat4 projectionMatrix = glm::ortho(-1.f, 1.f, -1.f, 1.f, -100.f, 100.f);//clip space
 			//передаем в вертексный шейдер и перемножаем с вектором координат и подаем на выход шейдера
 
-			pCyanShaderProgram_an->use();
+			pTextureShaderProgram_an->use();
+			pTextureShaderProgram_an->setInt("tex", 0);
+			tex->bind();
+
+			//pColShaderProgram_an->use();
+
+			// Передаем шейдеру матрицу проекции (поскольку проекционная матрица редко меняется, то нет необходимости делать это для каждого кадра)
+			glm::mat4 projectionMatrix = glm::perspective(glm::radians(camera.Zoom), (float)800/(float)600, 0.1f, 100.0f);
+			pPurpleShaderProgram_an->setMatrix4("projectionMat", projectionMatrix);
 
 			glm::mat4 modelMatrix = glm::mat4(1.0f); // сначала инициализируем единичную матрицу
-			glm::mat4 viewMatrix = glm::mat4(1.0f);
-			glm::mat4 projectionMatrix = glm::mat4(1.0f);
+			
+			//создаем преобразование камеры/вида
+			glm::mat4 viewMatrix = camera.GetViewMatrix();
+			pPurpleShaderProgram_an->setMatrix4("viewMat", viewMatrix);
+
+			//glm::mat4 projectionMatrix = glm::mat4(1.0f);
 			//modelMatrix = glm::rotate(modelMatrix, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 			modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-			viewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, 0.0f, -3.f));
-			projectionMatrix = glm::perspective(glm::radians(45.0f), (float)800 / (float)600, 0.1f, 100.f);
+			//viewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, 0.0f, -3.f));
+			//projectionMatrix = glm::perspective(glm::radians(45.0f), (float)800 / (float)600, 0.1f, 100.f);
 			//поле зрения
 			//соотношение сторон
 			//ближняя и дальняя плоскости (все, что между ними - визуализируется)
@@ -462,14 +498,14 @@ int main(int argc, char** argv)
 
 			
 			pPurpleShaderProgram_an->setMatrix4("modelMat", modelMatrix);
-			pPurpleShaderProgram_an->setMatrix4("viewMat", viewMatrix);
+			
 			/*unsigned int modelLoc = glGetUniformLocation(pPurpleShaderProgram_an->m_ID, "modelMatrix");
 			unsigned int viewLoc = glGetUniformLocation(pPurpleShaderProgram_an->m_ID, "viewMatrix");
 
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 			glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &viewMatrix[0][0]);*/
 			
-			pPurpleShaderProgram_an->setMatrix4("projectionMat", projectionMatrix);
+			
 			
 			
 			//группа элементов
@@ -482,7 +518,7 @@ int main(int argc, char** argv)
 
 			
 			glBindVertexArray(VAO[0]);
-			glDrawArrays(GL_TRIANGLES, 0, 24);
+			glDrawArrays(GL_TRIANGLES, 0, 36);
 			//glBindVertexArray(VAO[1]);
 			//glDrawArrays(GL_TRIANGLES, 0, 36);
 
