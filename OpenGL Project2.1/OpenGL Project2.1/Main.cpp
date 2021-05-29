@@ -20,180 +20,130 @@ using namespace std;
 //задание координат вершин и цвета
 
 GLfloat octahedron[] = {
-	//vertices            colors
-	-0.5f, 0.f,  0.f,	1.f, 0.f, 0.f, //1 верх
-	 0.f,  0.f,  0.5f,  1.f, 0.f, 0.f,
-	 0.f,  0.5f, 0.f,   1.f, 0.f, 0.f,
+	//vertices            colors		textures
+	-0.5f, 0.f,  0.f,	1.f, 0.f, 0.f,  0.0f, 0.0f, //left  back top
+	 0.f,  0.f,  0.5f,  1.f, 0.f, 0.f,  1.0f, 0.0f,
+	 0.f,  0.5f, 0.f,   1.f, 0.f, 0.f,  1.0f, 1.0f,
 
-	 0.f,  0.f,  0.5f,	0.f, 1.f, 0.f, //2 верх
-	 0.5f, 0.f,  0.f,	0.f, 1.f, 0.f,
-	 0.f,  0.5f, 0.f,	0.f, 1.f, 0.f,
+	 0.f,  0.f,  0.5f,	0.f, 1.f, 0.f,  0.0f, 0.0f, //left front top
+	 0.5f, 0.f,  0.f,	0.f, 1.f, 0.f,  1.0f, 0.0f,
+	 0.f,  0.5f, 0.f,	0.f, 1.f, 0.f,  0.0f, 1.0f,
 
-	-0.5f, 0.f,  0.f,	0.f, 1.f, 1.f, //1 низ
-	 0.f, -0.5f, 0.f,	0.f, 1.f, 1.f,
-	 0.f,  0.f,  0.5f,	0.f, 1.f, 1.f,
+	-0.5f, 0.f,  0.f,	0.f, 1.f, 1.f,  1.0f, 0.0f, //left back bottom
+	 0.f, -0.5f, 0.f,	0.f, 1.f, 1.f,  1.0f, 1.0f,
+	 0.f,  0.f,  0.5f,	0.f, 1.f, 1.f,  0.0f, 0.0f,
 
-	 0.f,  0.f,  0.5f,	1.f, 0.f, 0.f, //2 низ
-	 0.f, -0.5f, 0.f,	1.f, 0.f, 0.f,
-	 0.5f, 0.f,  0.f,	1.f, 0.f, 0.f,
+	 0.f,  0.f,  0.5f,	1.f, 0.f, 0.f,  1.0f, 0.0f, //left front bottom
+	 0.f, -0.5f, 0.f,	1.f, 0.f, 0.f,  0.0f, 1.0f,
+	 0.5f, 0.f,  0.f,	1.f, 0.f, 0.f,  0.0f, 0.0f,
 
-	-0.5f, 0.f,  0.f,	0.f, 0.f, 1.f, //3 верх
-	 0.f,  0.f, -0.5f,	0.f, 0.f, 1.f,
-	 0.f,  0.5f, 0.f,	0.f, 0.f, 1.f,
+	-0.5f, 0.f,  0.f,	0.f, 0.f, 1.f,  0.0f, 0.0f, //right back top
+	 0.f,  0.f, -0.5f,	0.f, 0.f, 1.f,  1.0f, 0.0f,
+	 0.f,  0.5f, 0.f,	0.f, 0.f, 1.f,  1.0f, 1.0f,
 
-	 0.f,  0.5f, 0.f,	0.f, 1.f, 1.f, //4 верх
-	 0.f,  0.f, -0.5f,	0.f, 1.f, 1.f,
-	 0.5f, 0.f,  0.f,	0.f, 1.f, 1.f,
+	 0.f,  0.5f, 0.f,	0.f, 1.f, 1.f,  0.0f, 1.0f, //right front top
+	 0.f,  0.f, -0.5f,	0.f, 1.f, 1.f,  0.0f, 0.0f,
+	 0.5f, 0.f,  0.f,	0.f, 1.f, 1.f,  1.0f, 0.0f,
 
-	-0.5f, 0.f,  0.f,	0.f, 1.f, 0.f, //3 низ
-	 0.f, -0.5f, 0.f,	0.f, 1.f, 0.f,
-	 0.f,  0.f, -0.5f,	0.f, 1.f, 0.f,
+	-0.5f, 0.f,  0.f,	0.f, 1.f, 0.f,  1.0f, 0.0f, //right back bottom
+	 0.f, -0.5f, 0.f,	0.f, 1.f, 0.f,  1.0f, 1.0f,
+	 0.f,  0.f, -0.5f,	0.f, 1.f, 0.f,  0.0f, 0.0f,
 
-	 0.f,  0.f, -0.5f,	0.f, 0.f, 1.f, //4 низ
-	 0.f, -0.5f, 0.f,	0.f, 0.f, 1.f,
-	 0.5f, 0.f,  0.f,	0.f, 0.f, 1.f
+	 0.f,  0.f, -0.5f,	0.f, 0.f, 1.f,  1.0f, 0.0f, //right front bottom
+	 0.f, -0.5f, 0.f,	0.f, 0.f, 1.f,  0.0f, 1.0f,
+	 0.5f, 0.f,  0.f,	0.f, 0.f, 1.f,  0.0f, 0.0f
 };
 
 GLfloat pyramid[] = {
-	//vertices            colors
-	 0.5f, -0.5f, -0.5f,  0.f, 1.f, 0.f,
-	 0.5f, -0.5f,  0.5f,  0.f, 1.f, 0.f,
-	 0.f,  0.5f,  0.f,  0.f, 1.f, 0.f,
+	//vertices            colors			textures
+	 0.5f, -0.5f, -0.5f,  0.f, 1.f, 0.f,  0.0f, 0.5f, //right
+	 0.5f, -0.5f,  0.5f,  0.f, 1.f, 0.f,  1.0f, 0.0f,
+	 0.f,   0.5f,  0.f,   0.f, 1.f, 0.f,  1.0f, 1.0f,
 
-	 0.5f, -0.5f,  0.5f,  0.f, 0.f, 1.f,
-	-0.5f, -0.5f,  0.5f,  0.f, 0.f, 1.f,
-	 0.f,  0.5f,  0.f,  0.f, 0.f, 1.f,
+	 0.5f, -0.5f,  0.5f,  0.f, 0.f, 1.f,  0.0f, 0.5f, //front
+	-0.5f, -0.5f,  0.5f,  0.f, 0.f, 1.f,  1.0f, 0.0f,
+	 0.f,   0.5f,  0.f,   0.f, 0.f, 1.f,  1.0f, 1.0f,
 
-	-0.5f, -0.5f,  0.5f,  0.f, 1.f, 1.f,
-	-0.5f, -0.5f, -0.5f,  0.f, 1.f, 1.f,
-	 0.f,  0.5f,  0.f,  0.f, 1.f, 1.f,
+	-0.5f, -0.5f,  0.5f,  0.f, 1.f, 1.f,  0.0f, 0.5f, //left
+	-0.5f, -0.5f, -0.5f,  0.f, 1.f, 1.f,  1.0f, 0.0f,
+	 0.f,   0.5f,  0.f,   0.f, 1.f, 1.f,  1.0f, 1.0f,
 
-	-0.5f, -0.5f, -0.5f,  1.f, 0.f, 1.f,
-	 0.5f, -0.5f, -0.5f,  1.f, 0.f, 1.f,
-	 0.f,  0.5f,  0.f,  1.f, 0.f, 1.f,
+	-0.5f, -0.5f, -0.5f,  1.f, 0.f, 1.f,  0.0f, 0.5f, //back
+	 0.5f, -0.5f, -0.5f,  1.f, 0.f, 1.f,  1.0f, 0.0f,
+	 0.f,   0.5f,  0.f,   1.f, 0.f, 1.f,  1.0f, 1.0f,
 
-	 0.5f, -0.5f,  0.5f,  1.f, 1.f, 0.f,
-	-0.5f, -0.5f,  0.5f,  1.f, 1.f, 0.f,
-	-0.5f, -0.5f, -0.5f,  1.f, 1.f, 0.f,
-	 0.5f, -0.5f,  0.5f,  1.f, 1.f, 0.f,
-	-0.5f, -0.5f, -0.5f,  1.f, 1.f, 0.f,
-	 0.5f, -0.5f, -0.5f,  1.f, 1.f, 0.f
+	 0.5f, -0.5f,  0.5f,  1.f, 1.f, 0.f,  1.0f, 0.0f, //bottom
+	-0.5f, -0.5f,  0.5f,  1.f, 1.f, 0.f,  0.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f,  1.f, 1.f, 0.f,  0.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,  1.f, 1.f, 0.f,  1.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f,  1.f, 1.f, 0.f,  0.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,  1.f, 1.f, 0.f,  1.0f, 1.0f
 
 };
+
 float a = 1.5; //длина ребра
 GLfloat tetrahedron[] = {
-	//vertices            colors
-	 0.f,  0.f,  a*sqrt(6)/4,  0.f, 1.f, 0.f,
-	 a/sqrt(3), 0.f, -a*sqrt(6)/12,  0.f, 1.f, 0.f,
-	-a/sqrt(12), a/2, -a*sqrt(6)/12,  0.f, 1.f, 0.f,
+	//vertices							colors			textures
+	 0.f,		  0.f,  a*sqrt(6)/4,   0.f, 1.f, 0.f,	0.5f, 1.0f,
+	 a/sqrt(3),   0.f, -a*sqrt(6)/12,  0.f, 1.f, 0.f,	0.0f, 0.0f,
+	-a/sqrt(12),  a/2, -a*sqrt(6)/12,  0.f, 1.f, 0.f,	1.0f, 0.0f,
 
-	 0, 0, a*sqrt(6)/4,  0.f, 0.f, 1.f, 
-	-a/sqrt(12), -a/2, -a*sqrt(6)/12,  0.f, 0.f, 1.f,
-	 a/sqrt(3), 0, -a*sqrt(6)/12,  0.f, 0.f, 1.f, 
+	 0,			  0,    a*sqrt(6)/4,   0.f, 0.f, 1.f,	0.5f, 1.0f,
+	-a/sqrt(12), -a/2, -a*sqrt(6)/12,  0.f, 0.f, 1.f,	0.0f, 0.0f,
+	 a/sqrt(3),   0,   -a*sqrt(6)/12,  0.f, 0.f, 1.f,	1.0f, 0.0f,
 
-	 0, 0, a*sqrt(6)/4,  0.f, 1.f, 1.f,
-	-a/sqrt(12), a/2, -a*sqrt(6)/12,  0.f, 1.f, 1.f, 
-	-a/sqrt(12), -a/2, -a*sqrt(6)/12,  0.f, 1.f, 1.f, 
+	 0,			  0,    a*sqrt(6)/4,   0.f, 1.f, 1.f,	0.5f, 1.0f,
+	-a/sqrt(12),  a/2, -a*sqrt(6)/12,  0.f, 1.f, 1.f,	1.0f, 0.0f,
+	-a/sqrt(12), -a/2, -a*sqrt(6)/12,  0.f, 1.f, 1.f,	0.0f, 0.0f,
 
-	 a/sqrt(3), 0, -a*sqrt(6)/12,  1.f, 0.f, 1.f,
-	-a/sqrt(12), -a/2, -a*sqrt(6)/12,  1.f, 0.f, 1.f,
-	-a/sqrt(12), a/2, -a*sqrt(6)/12,  1.f, 0.f, 1.f 
+	 a/sqrt(3),	  0,   -a*sqrt(6)/12,  1.f, 0.f, 1.f,	0.5f, 1.0f,
+	-a/sqrt(12), -a/2, -a*sqrt(6)/12,  1.f, 0.f, 1.f,	0.0f, 0.0f,
+	-a/sqrt(12),  a/2, -a*sqrt(6)/12,  1.f, 0.f, 1.f,	1.0f, 0.0f
 };
-/*unsigned int indices1[] = {
-	0, 1, 2, //1
-	0, 3, 1,
-	0, 2, 3,
-	1, 3, 2
-};*/
 
 GLfloat cube[] = {
-	//vertices            colors
-	-0.5f, -0.5f, -0.5f,  1.f, 0.f, 0.f,
-	 0.5f, -0.5f, -0.5f,  1.f, 0.f, 0.f,
-	 0.5f,  0.5f, -0.5f,  1.f, 0.f, 0.f,
-	 0.5f,  0.5f, -0.5f,  1.f, 0.f, 0.f,
-	-0.5f,  0.5f, -0.5f,  1.f, 0.f, 0.f,
-	-0.5f, -0.5f, -0.5f,  1.f, 0.f, 0.f,
+	//vertices				//colors		//textures
+	-0.5f, -0.5f, -0.5f,	1.f, 0.f, 0.f,	  0.0f, 0.0f, //back
+	 0.5f, -0.5f, -0.5f,	1.f, 0.f, 0.f,	  1.0f, 0.0f,
+	 0.5f,  0.5f, -0.5f,	1.f, 0.f, 0.f,	  1.0f, 1.0f,
+	 0.5f,  0.5f, -0.5f,	1.f, 0.f, 0.f,	  1.0f, 1.0f,
+	-0.5f,  0.5f, -0.5f,	1.f, 0.f, 0.f,	  0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,	1.f, 0.f, 0.f,	  0.0f, 0.0f,
 
-	-0.5f, -0.5f,  0.5f,  0.f, 1.f, 0.f,
-	 0.5f, -0.5f,  0.5f,  0.f, 1.f, 0.f,
-	 0.5f,  0.5f,  0.5f,  0.f, 1.f, 0.f,
-	 0.5f,  0.5f,  0.5f,  0.f, 1.f, 0.f,
-	-0.5f,  0.5f,  0.5f,  0.f, 1.f, 0.f,
-	-0.5f, -0.5f,  0.5f,  0.f, 1.f, 0.f,
+	-0.5f, -0.5f,  0.5f,	1.f, 0.f, 0.f,	  0.0f, 0.0f, //front
+	 0.5f, -0.5f,  0.5f,	1.f, 0.f, 0.f,    1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,	1.f, 0.f, 0.f,    1.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,	1.f, 0.f, 0.f,    1.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,	1.f, 0.f, 0.f,    0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,	1.f, 0.f, 0.f,    0.0f, 0.0f,
 
-	-0.5f,  0.5f,  0.5f,  0.f, 0.f, 1.f,
-	-0.5f,  0.5f, -0.5f,  0.f, 0.f, 1.f,
-	-0.5f, -0.5f, -0.5f,  0.f, 0.f, 1.f,
-	-0.5f, -0.5f, -0.5f,  0.f, 0.f, 1.f,
-	-0.5f, -0.5f,  0.5f,  0.f, 0.f, 1.f,
-	-0.5f,  0.5f,  0.5f,  0.f, 0.f, 1.f,
+	-0.5f,  0.5f,  0.5f,	0.f, 1.f, 0.f,	  1.f, 1.f,	//left	
+	-0.5f,  0.5f, -0.5f,	0.f, 1.f, 0.f,	  0.f, 1.f,
+	-0.5f, -0.5f, -0.5f,	0.f, 1.f, 0.f,	  0.f, 0.f,
+	-0.5f, -0.5f, -0.5f,	0.f, 1.f, 0.f,	  0.f, 0.f,
+	-0.5f, -0.5f,  0.5f,	0.f, 1.f, 0.f,	  1.f, 0.f,
+	-0.5f,  0.5f,  0.5f,	0.f, 1.f, 0.f,	  1.f, 1.f,
 
-	 0.5f,  0.5f,  0.5f,  0.f, 1.f, 1.f,
-	 0.5f,  0.5f, -0.5f,  0.f, 1.f, 1.f,
-	 0.5f, -0.5f, -0.5f,  0.f, 1.f, 1.f,
-	 0.5f, -0.5f, -0.5f,  0.f, 1.f, 1.f,
-	 0.5f, -0.5f,  0.5f,  0.f, 1.f, 1.f,
-	 0.5f,  0.5f,  0.5f,  0.f, 1.f, 1.f,
+	 0.5f,  0.5f,  0.5f,	0.f, 1.f, 0.f,	  1.0f, 1.0f, //right
+	 0.5f,  0.5f, -0.5f,	0.f, 1.f, 0.f,	  0.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,	0.f, 1.f, 0.f,	  0.0f, 0.0f,
+	 0.5f, -0.5f, -0.5f,	0.f, 1.f, 0.f,	  0.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,	0.f, 1.f, 0.f,	  1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,	0.f, 1.f, 0.f,	  1.0f, 1.0f,
 
-	-0.5f, -0.5f, -0.5f,  1.f, 1.f, 0.f,
-	 0.5f, -0.5f, -0.5f,  1.f, 1.f, 0.f,
-	 0.5f, -0.5f,  0.5f,  1.f, 1.f, 0.f,
-	 0.5f, -0.5f,  0.5f,  1.f, 1.f, 0.f,
-	-0.5f, -0.5f,  0.5f,  1.f, 1.f, 0.f,
-	-0.5f, -0.5f, -0.5f,  1.f, 1.f, 0.f,
+	-0.5f, -0.5f, -0.5f,	0.f, 0.f, 1.f,	  0.0f, 1.0f, //bottom
+	 0.5f, -0.5f, -0.5f,	0.f, 0.f, 1.f,	  1.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,	0.f, 0.f, 1.f,	  1.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,	0.f, 0.f, 1.f,	  1.0f, 0.0f,
+	-0.5f, -0.5f,  0.5f,	0.f, 0.f, 1.f,	  0.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f,	0.f, 0.f, 1.f,	  0.0f, 1.0f,
 
-	-0.5f,  0.5f, -0.5f,  1.f, 0.f, 1.f,
-	 0.5f,  0.5f, -0.5f,  1.f, 0.f, 1.f,
-	 0.5f,  0.5f,  0.5f,  1.f, 0.f, 1.f,
-	 0.5f,  0.5f,  0.5f,  1.f, 0.f, 1.f,
-	-0.5f,  0.5f,  0.5f,  1.f, 0.f, 1.f,
-	-0.5f,  0.5f, -0.5f,  1.f, 0.f, 1.f
-};
-
-GLfloat cube_t[] = {
-	//vertices					//textures
-		 -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-		  0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-		  0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		  0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		 -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-		 -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		  0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		  0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		  0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		 -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-		 -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-		 -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		 -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		 -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-		  0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		  0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		  0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		  0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		  0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		  0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-		 -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		  0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-		  0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		  0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		 -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		 -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-		 -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		  0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		  0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		  0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		 -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-		 -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+	-0.5f,  0.5f, -0.5f,	0.f, 0.f, 1.f,	  0.0f, 1.0f, //top
+	 0.5f,  0.5f, -0.5f,	0.f, 0.f, 1.f,	  1.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,	0.f, 0.f, 1.f,	  1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,	0.f, 0.f, 1.f,	  1.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f,	0.f, 0.f, 1.f,	  0.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f,	0.f, 0.f, 1.f,	  0.0f, 1.0f
 };
 
 unsigned int indices[] = {
@@ -281,8 +231,6 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 int main(int argc, char** argv)
 {
-
-
 	//инициализация библиотеки GLFW
 	glfwInit();
 	//установка минимальных необходимых параметров OpenGL	
@@ -307,6 +255,8 @@ int main(int argc, char** argv)
 	}
 	//сообщаем GLFW сделать контекст нашего окна основным контекстом в текущем потоке
 	glfwMakeContextCurrent(window);
+	//запрещает изменение размеров окна
+	glfwSetWindowSizeLimits(window, 800, 600, 800, 600);
 
 	//сообщаем GLFW, что хотим вызывать функцию framebuffer_size_callback
 	//каждый раз при изменении размеров окна
@@ -403,38 +353,66 @@ int main(int argc, char** argv)
 		cerr << "cant create shader program: " << "texture_an" << endl;
 		return -1;
 	}
-	auto tex = manager.loadTexture("BackgroundTexture", "image/img.jpg");
+	auto tex = manager.loadTexture("BackgroundTexture", "image/glass.jpg");
+	auto tex1 = manager.loadTexture("BackgroundTexture1", "image/img.jpg");
 
 	{
 		//объявление вершинного буфера и вершинного массива
-		GLuint VBO[2], VAO[2], EBO[1];
-		glGenVertexArrays(2, VAO);
-		glGenBuffers(2, VBO);
+		GLuint VBO[3], VAO[3], EBO[1];
+		glGenVertexArrays(3, VAO);
+		glGenBuffers(3, VBO);
 		glGenBuffers(1, EBO);//create
 
 		//menu
 
-		//triangle
-		glBindVertexArray(VAO[0]);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(cube_t), cube_t, GL_STATIC_DRAW);
-		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[0]);
-		//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices1), indices1, GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-		glEnableVertexAttribArray(1);
-
 		//cube
-		/*glBindVertexArray(VAO[1]);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
+		/*glBindVertexArray(VAO[0]);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(cube), cube, GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[0]);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-		glEnableVertexAttribArray(1);*/
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+		glEnableVertexAttribArray(2);
+		*/
+
+		//tetrahedron
+		/*glBindVertexArray(VAO[1]);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(tetrahedron), tetrahedron, GL_STATIC_DRAW);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+		glEnableVertexAttribArray(2);
+		*/
+
+		//pyramid
+		/*glBindVertexArray(VAO[2]);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO[2]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(pyramid), pyramid, GL_STATIC_DRAW);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+		glEnableVertexAttribArray(2);
+		*/
+
+		//octahedron
+		glBindVertexArray(VAO[2]);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO[2]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(octahedron), octahedron, GL_STATIC_DRAW);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+		glEnableVertexAttribArray(2);
 
 
 		//отменяем привязку вершинного буфера и вершинного массива
@@ -468,11 +446,26 @@ int main(int argc, char** argv)
 
 			//glm::mat4 projectionMatrix = glm::ortho(-1.f, 1.f, -1.f, 1.f, -100.f, 100.f);//clip space
 			//передаем в вертексный шейдер и перемножаем с вектором координат и подаем на выход шейдера
+			if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+			{
+				pTextureShaderProgram_an->use();
+				pTextureShaderProgram_an->setInt("tex", 0);
+				tex->bind();
+			}
+			else if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+			{
+				pTextureShaderProgram_an->use();
+				pTextureShaderProgram_an->setInt("tex", 0);
+				tex1->bind();
+			};
 
-			pTextureShaderProgram_an->use();
-			pTextureShaderProgram_an->setInt("tex", 0);
-			tex->bind();
 
+
+			
+			//pTextureShaderProgram_an->use();
+			//pTextureShaderProgram_an->setInt("tex", 0);
+			//tex->bind();
+			
 			//pColShaderProgram_an->use();
 
 			// Передаем шейдеру матрицу проекции (поскольку проекционная матрица редко меняется, то нет необходимости делать это для каждого кадра)
@@ -480,6 +473,8 @@ int main(int argc, char** argv)
 			pPurpleShaderProgram_an->setMatrix4("projectionMat", projectionMatrix);
 
 			glm::mat4 modelMatrix = glm::mat4(1.0f); // сначала инициализируем единичную матрицу
+			//поворот tetrahedron/octahedron на 90 градусов по оси x/y
+			modelMatrix = glm::rotate(modelMatrix, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 			
 			//создаем преобразование камеры/вида
 			glm::mat4 viewMatrix = camera.GetViewMatrix();
@@ -487,9 +482,11 @@ int main(int argc, char** argv)
 
 			//glm::mat4 projectionMatrix = glm::mat4(1.0f);
 			//modelMatrix = glm::rotate(modelMatrix, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-			modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+	
+			//задаем движение объекта (поворот)
+			//modelMatrix = glm::rotate(modelMatrix, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 			//viewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, 0.0f, -3.f));
-			//projectionMatrix = glm::perspective(glm::radians(45.0f), (float)800 / (float)600, 0.1f, 100.f);
+			//projectionMatrix = glm::perspective(glm::radians(45.0f), (float)800/(float)600, 0.1f, 100.f);
 			//поле зрения
 			//соотношение сторон
 			//ближняя и дальняя плоскости (все, что между ними - визуализируется)
@@ -517,10 +514,8 @@ int main(int argc, char** argv)
 
 
 			
-			glBindVertexArray(VAO[0]);
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-			//glBindVertexArray(VAO[1]);
-			//glDrawArrays(GL_TRIANGLES, 0, 36);
+			glBindVertexArray(VAO[2]);
+			glDrawArrays(GL_TRIANGLES, 0, 24);
 
 			
 			/*if (m_change == 7)

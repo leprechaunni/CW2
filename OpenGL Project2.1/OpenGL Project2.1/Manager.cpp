@@ -7,7 +7,7 @@
 #include <iostream>
 
 #define STB_IMAGE_IMPLEMENTATION
-#define STBI_ONLY_JPEG
+//#define STBI_ONLY_JPEG
 //#define STBI_ONLY_PNG
 #include "stb_image.h"
 
@@ -83,6 +83,7 @@ std::shared_ptr<RenderEngine::Texture2D> Manager::loadTexture(const std::string&
     int height = 0;
 
     stbi_set_flip_vertically_on_load(true);
+    //указатель на массив байтов
     unsigned char* pixels = stbi_load(std::string(m_path + "/" + texturePath).c_str(), &width, &height, &channels, 0);
 
     if (!pixels)
